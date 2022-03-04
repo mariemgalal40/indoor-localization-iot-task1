@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <style>
+        .center-fit {
+            width: 1600px;
+            max-height: 100vh;
+            margin: auto;
+            position: relative;
+        }
+        .container{
+            width:50px;
+            height:50px;
+            position: absolute;
+        }
+        .button {
+            border: none;
+            padding: 15px 32px;
+            text-align: center;
+            font-size: 18px;
+            transition-duration: 0.4s;
+            background-color: white; 
+            color: black; 
+            border: 4px solid #6e2151;
+        }
+
+        .button1{
+            position: absolute;
+            left: 45%;  
+        }
+        .line{
+            position: absolute;
+            border: 6px solid rgb(49, 0, 128);
+            border-radius: 4px;
+        }
+
+        </style>
+        <script src="index.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+    </header>
+    <body>
+        <div>
+            <div>
+                <img class="center-fit" src="floor2.jpeg">
+                <hr id="shape1" class ="line" style="width:50%">
+                <hr  id="shape2" class ="line"  style="height: 200px">
+                <hr  id="shape3" class ="line" style="height: 200px">
+            </div>
+            <div>
+                <img  class=" container"  id = "point" src="loc.PNG">
+                </div>
+            </div>
+           
+        <button class="button button1" onclick="check()" >show_path</button>
+        <script>
+            var pos =[];
+            var value;
+            const arr= [{x:"370px", y:"370px"}, {x:"1200px", y:"370px"},{x:"335px", y:"250px"}, {x:"1200px", y:"550px"}, {x:"550px", y:"180px"}, {x:"1000px", y:"550px"}];
+
+            const path1 = [{t:"370px", b:"1010px", w:"300px"}, {t:"370px", b:"600px", w:"720px"}, {t:"370px", b:"320px", w:"1000px"}, {t:"370px", b:"320px", w:"275px"}, {t:"370px", b:"320px", w:"690px"}, {t:"370px", b:"600px", w:"410px"}];
+            const path2 = [{t:"370px", b:"1320px", h:"100px"}, {t:"370px", b:"1320px", h:"100px"}, {t:"370px", b:"1320px", h:"100px"}, {t:"270px", b:"595px", h:"100px"}, {t:"370px", b:"1010px", h:"100px"}, {t:"370px", b:"1010px", h:"100px"}];
+            const path3 = [{t:"370px", b:"1010px", h:"100px"}, {t:"270px", b:"595px", h:"100px"}, {t:"270px", b:"315px", h:"100px"}, {t:"270px", b:"315px", h:"100px"}, {t:"270px", b:"315px", h:"100px"}, {t:"270px", b:"595px", h:"100px"}];
+            
+            var position1 = document.getElementById("shape1").style;
+            var position2 = document.getElementById("shape2").style;
+            var position3 = document.getElementById("shape3").style;
+
+            var position = document.getElementById("point").style;
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyAI7R4Pc5HLymCAM210vfwIJpjbHpUycBk",
+                authDomain: "localization-26a20.firebaseapp.com",
+                databaseURL: "https://localization-26a20-default-rtdb.firebaseio.com",
+                projectId: "localization-26a20",
+                storageBucket: "localization-26a20.appspot.com",
+                messagingSenderId: "995184331129",
+                appId: "1:995184331129:web:ed4d25f5ac938fdc7b87a8",
+                measurementId: "G-18XB5HZXHS"
+            };
+            firebase.initializeApp(firebaseConfig);
+
+            var data = firebase.database().ref().child("label")
+                data.on("value", (snap)=>{
+                value = snap.val();
+                pos.push(value);
+                console.log(pos);
+                switch(value){
+                    case 0:
+                    position.top = String(arr[0].y);
+                    position.left =String(arr[0].x);
+                    break;
+                    case 1:
+                    position.top = String(arr[1].y);
+                    position.left =String(arr[1].x);
+                    break;
+                    case 2:
+                    position.top = String(arr[2].y);
+                    position.left =String(arr[2].x);
+                    break;
+                    case 3:
+                    position.top = String(arr[3].y);
+                    position.left =String(arr[3].x);
+                    break;
+                    case 4:
+                    position.top = String(arr[4].y);
+                    position.left =String(arr[4].x);
+                    break;
+                    case 5:
+                    position.top = String(arr[5].y);
+                    position.left =String(arr[5].x);
+                    break;
+                    }
+
+                })
+        
+           
+        </script>
+
+    </body>
+</html>
+
+<!-- case0 -> hall to lab value  3 1 5 
+case1 -> hall to lab2          3 1 0 4
+case2 -> hall to doctors       3 1 0 2
+case3 -> lab2 to doctors       4 0 2
+case4 -> doctors to lab value  5 0 2
+case5 -> lab to la value       5 0 4
+
+
+-->
